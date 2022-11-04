@@ -2,6 +2,40 @@ web3RPA平台 前端
 ===============
 
 web3rpa front based on jeecg-boot-vue3
+## getting start
+
+- Installation dependencies
+
+```bash
+cd web3rpa-vue
+
+yarn install
+
+```
+
+- 配置后台接口地址
+>[info] 说明：把`http://localhost:8080/rpa-server` 替换成自己地址即可，其他不用改。
+
+配置文件：.env.development
+```bash
+VITE_GLOB_API_URL=/rpa-server
+VITE_PROXY = [["/rpa-server","http://localhost:8080/rpa-server"],["/upload",
+"http://localhost:3300/upload"]]
+VITE_GLOB_DOMAIN_URL=http://localhost:8080/rpa-server
+```
+- run
+
+```bash
+yarn serve
+```
+
+
+- build
+
+```bash
+yarn build
+```
+
 
 ## 技术框架及源码
 ### 源码下载
