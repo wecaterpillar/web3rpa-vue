@@ -10,6 +10,14 @@ import { wrapperEnv } from './build/utils';
 import { createVitePlugins } from './build/vite/plugin';
 import { OUTPUT_DIR } from './build/constant';
 
+import electron from 'vite-electron-plugin'
+import { customStart, loadViteEnv } from 'vite-electron-plugin/plugin'
+import renderer from 'vite-plugin-electron-renderer'
+
+import { rmSync } from 'fs'
+
+rmSync('dist-electron', { recursive: true, force: true })
+
 function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir);
 }
@@ -93,7 +101,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     },
 
     // The vite plugin used by the project. The quantity is large, so it is separately extracted and managed
-    plugins: createVitePlugins(viteEnv, isBuild),
+    plugins: getVitePlugins(viteEnv, isBuild),
 
     optimizeDeps: {
       esbuildOptions: {
@@ -110,3 +118,37 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     },
   };
 };
+
+function getVitePlugins(viteEnv: ViteEnv, isBuild: boolean){
+  let vitePlugins =  createVitePlugins(viteEnv, isBuild)
+  // electron
+  vitePlugins.push(electron({
+    include: ['electron'],
+    transformOptions: {
+      sourcemap: !!process.env.VSCODE_DEBUG,
+    },
+    plugins: [
+      ...(process.env.VSCODE_DEBUG
+        ? [
+          // Will start Electron via VSCode Debug
+          customStart(debounce(() => console.log(/* For `.vscode/.debug.script.mjs` */'[startup] Electron App'))),
+        ]
+        : []),
+        // Allow use `import.meta.env.VITE_SOME_KEY` in Electron-Main
+      loadViteEnv(),
+    ],
+  }))
+  vitePlugins.push(renderer({
+    nodeIntegration: true,
+  }))
+  return vitePlugins;
+}
+
+function debounce<Fn extends (...args: any[]) => void>(fn: Fn, delay = 299) {
+  let t: NodeJS.Timeout
+  return ((...args) => {
+    clearTimeout(t)
+    t = setTimeout(() => fn(...args), delay)
+  }) as Fn
+}
+
