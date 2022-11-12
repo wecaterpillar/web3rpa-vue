@@ -4,10 +4,10 @@ VOLUME /tmp
 ENV LANG en_US.UTF-8
 RUN echo "server {  \
                       listen       80; \
-                      location   /jeecgboot/ { \
-                      proxy_pass              http://jeecg-boot-system:8080/jeecg-boot/; \
+                      location   /rpa-server/ { \
+                      proxy_pass              http://w3rpa-server:8080/rpa-server/; \
                       proxy_redirect          off; \
-                      proxy_set_header        Host jeecg-boot-system; \
+                      proxy_set_header        Host w3rpa-server; \
                       proxy_set_header        X-Real-IP \$remote_addr; \
                       proxy_set_header        X-Forwarded-For \$proxy_add_x_forwarded_for; \
                   } \
