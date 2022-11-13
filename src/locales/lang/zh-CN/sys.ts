@@ -67,8 +67,8 @@ export default {
     signUpFormTitle: '注册',
     forgetFormTitle: '重置密码',
 
-    signInTitle: 'web3 RPA Server',
-    signInDesc: 'web3 RPA Server 自动化流程工具',
+    signInTitle: 'Web3 RPA Server',
+    signInDesc: 'Web3 RPA Server 自动化流程工具',
     policy: '我同意xxx隐私政策',
     scanSign: `扫码后，即可完成登录`,
     scanSuccess: `扫码成功，登录中`,

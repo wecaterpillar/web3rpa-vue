@@ -5,7 +5,7 @@
             <div class="app-loading-dots">
                 <span class="dot dot-spin"><i></i><i></i><i></i><i></i></span>
             </div>
-            <div class="app-loading-title">JeecgBoot 企业级低代码平台</div>
+            <div class="app-loading-title">Web3 RPA</div>
         </div>
     </div>
 </template>
@@ -19,7 +19,7 @@
   import { useMessage } from '/@/hooks/web/useMessage';
   import { useUserStore } from '/@/store/modules/user';
   import { useI18n } from '/@/hooks/web/useI18n';
-  
+
   export default {
     name: "TokenLogin",
     setup(){
@@ -31,7 +31,7 @@
       if(!routeQuery){
         createMessage.warning('参数无效')
       }
-     
+
       const token = routeQuery['loginToken'];
       if(!token){
         createMessage.warning('token无效')
@@ -53,7 +53,7 @@
           duration: 4,
         });
       }
-      
+
       function requestSuccess(res){
         let info = routeQuery.info;
         if(info){
