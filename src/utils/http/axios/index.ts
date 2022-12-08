@@ -96,7 +96,10 @@ const transform: AxiosTransform = {
     }
 
     if (apiUrl && isString(apiUrl)) {
-      config.url = `${apiUrl}${config.url}`;
+      // special for http/https
+      if (!config.url?.startsWith('http')) {
+        config.url = `${apiUrl}${config.url}`;
+      }
     }
     const params = config.params || {};
     const data = config.data || false;
