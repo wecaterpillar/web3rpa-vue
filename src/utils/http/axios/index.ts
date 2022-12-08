@@ -96,8 +96,8 @@ const transform: AxiosTransform = {
     }
 
     if (apiUrl && isString(apiUrl)) {
-      // special for http/https
-      if (!config.url?.startsWith('http')) {
+      // special for http/https and w3rpa://
+      if (!config.url?.startsWith('http') && !config.url?.startsWith('w3rpa://')) {
         config.url = `${apiUrl}${config.url}`;
       }
     }
